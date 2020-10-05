@@ -23,11 +23,11 @@ class InputForm extends React.Component{
                     <Form.Group controlId="Select">
                         <Form.Label>Bike type</Form.Label>
                         <Form.Control as="select">
-                            <option>Road</option>
-                            <option>Mountain</option>
-                            <option>Children</option>
-                            <option>Retro</option>
-                            <option>Custom</option>
+                            <option value="Road">Road</option>
+                            <option value="Mountain">Mountain</option>
+                            <option value="Children">Children</option>
+                            <option value="Retro">Retro</option>
+                            <option value="Custom">Custom</option>
                         </Form.Control>
                      </Form.Group>
                     </Col>

@@ -1,30 +1,29 @@
 
 const express = require("express");
 const mongoose = require("mongoose");
-const config = require("config");
-const Bike = require("./models/Bike");
-
-
+const {createServer} = require('http')
 const app = express();
-const PORT =config.get('serverPort');
-const start = async () => {
-    try{
-        await mongoose.connect('mongodb+srv://Valera:3066Db88@cluster0.sgxx4.azure.mongodb.net/Cluster0?retryWrites=true&w=majority', {useNewUrlParser: true} );
+const port = 3000;
+const keys = require("./config/keys")
+const Bikes = require("./models/Bike")
 
-        app.listen(PORT, ()=> {
-            console.log('Server have been start on port',PORT)
-        } )
-    }catch(e){
+  mongoose.connect(keys.mongoDb,
+         {useNewUrlParser: true, useUnifiedTopology: true},
+         )
+                      
+        .then(() => console.log('MongoDB connected'))
+        .catch(err => console.log(err));
 
-    }
-}
+    const bicycle = new Bikes
+    app.get('/', (req, res) => {
+         bicycle.create({
+          name: 'BMW',
+          type:[2],
+          cost: 45,
+        })
+          .then( bicycle => res.save(bicycle))
+    .catch(err => res.send(err)); 
+    }); 
 
-
-start();
-
-Bike.create({
-    name: 'Mazda',
-    type: 'default' 
-    price:25
-
-})
+const server = createServer(app);
+server.listen(port, () => console.log(`Server is up on ${port} `));
